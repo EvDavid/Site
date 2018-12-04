@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="styleSlider.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	</head>
+	
+<body>
+
+	<div class="header_row">
+		<div class="header_content">
+			<img src="logo.png">
+			<div class="posts">
+				<ul class="list">
+					<li><a href="#">About</a></li>
+					<li><a href="#">Equipment</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+  </div>
+  
+ <div class="slider">
+	<div class="slider__wrapper">
+		<div class="slider__item">
+			<div><img src="mojka_logo.liOjB.jpg"></div>
+		</div>
+		<div class="slider__item">
+			<div><img src="mojka_logo.liOjB.jpg"></div>
+		</div>
+		<div class="slider__item">
+			<div><img src="mojka_logo.liOjB.jpg"></div>
+		</div>
+		<div class="slider__item">
+			<div><img src="mojka_logo.liOjB.jpg"></div>
+		</div>
+	</div>
+	<a class="slider__control slider__control_left"  role="button"></a>
+	<a class="slider__control slider__control_right slider__control_show" role="button"></a>
+</div>
+	
+	 <script>
+	
+'use strict';
+    var multiItemSlider = (function () {
+      return function (selector, config) {
+        var
+          _mainElement = document.querySelector(selector), // основный элемент блока
+          _sliderWrapper = _mainElement.querySelector('.slider__wrapper'), // обертка для .slider-item
+          _sliderItems = _mainElement.querySelectorAll('.slider__item'), // элементы (.slider-item)
+          _sliderControls = _mainElement.querySelectorAll('.slider__control'), // элементы управления
+          _sliderControlLeft = _mainElement.querySelector('.slider__control_left'), // кнопка "LEFT"
+          _sliderControlRight = _mainElement.querySelector('.slider__control_right'), // кнопка "RIGHT"
+          _wrapperWidth = parseFloat(getComputedStyle(_sliderWrapper).width), // ширина обёртки
+          _itemWidth = parseFloat(getComputedStyle(_sliderItems[0]).width), // ширина одного элемента    
+          _positionLeftItem = 0, // позиция левого активного элемента
+          _transform = 0, // значение транфсофрмации .slider_wrapper
+          _step = _itemWidth / _wrapperWidth * 100, // величина шага (для трансформации)
+          _items = []; // массив элементов
+        // наполнение массива _items
+        _sliderItems.forEach(function (item, index) {
+          _items.push({ item: item, position: index, transform: 0 });
+        });
+
+        var position = {
+          getMin: 0,
+          getMax: _items.length - 1,
+        }
+
+        var _transformItem = function (direction) {
+          if (direction === 'right') {
+            if ((_positionLeftItem + _wrapperWidth / _itemWidth - 1) >= position.getMax) {
+              return;
+            }
+            if (!_sliderControlLeft.classList.contains('slider__control_show')) {
+              _sliderControlLeft.classList.add('slider__control_show');
+            }
+            if (_sliderControlRight.classList.contains('slider__control_show') && (_positionLeftItem + _wrapperWidth / _itemWidth) >= position.getMax) {
+              _sliderControlRight.classList.remove('slider__control_show');
+            }
+            _positionLeftItem++;
+            _transform -= _step;
+          }
+          if (direction === 'left') {
+            if (_positionLeftItem <= position.getMin) {
+              return;
+            }
+            if (!_sliderControlRight.classList.contains('slider__control_show')) {
+              _sliderControlRight.classList.add('slider__control_show');
+            }
+            if (_sliderControlLeft.classList.contains('slider__control_show') && _positionLeftItem - 1 <= position.getMin) {
+              _sliderControlLeft.classList.remove('slider__control_show');
+            }
+            _positionLeftItem--;
+            _transform += _step;
+          }
+          _sliderWrapper.style.transform = 'translateX(' + _transform + '%)';
+        }
+
+        // обработчик события click для кнопок "назад" и "вперед"
+        var _controlClick = function () {
+          var direction = this.classList.contains('slider__control_right') ? 'right' : 'left';
+          _transformItem(direction);
+        };
+
+        var _setUpListeners = function () {
+          // добавление к кнопкам "назад" и "вперед" обрботчика _controlClick для событя click
+          _sliderControls.forEach(function (item) {
+            item.addEventListener('click', _controlClick);
+          });
+        }
+
+        // инициализация
+        _setUpListeners();
+
+        return {
+          right: function () { // метод right
+            _transformItem('right');
+          },
+          left: function () { // метод left
+            _transformItem('left');
+          }
+        }
+
+      }
+    }());
+
+    var slider = multiItemSlider('.slider')
+
+
+	</script>
+	
+	<div class="choice_buttons">
+		<div class="inner_button_first">
+			<h2>History</h2>
+			<p>Easy peasy lemon squeezy</p>
+		</div>
+		<div class="inner_button_second">
+			<h2>History</h2>
+			<p>Easy peasy lemon squeezy</p>
+		</div>
+	</div>
+	
+	<div class="title">
+		<h2>Мойки</h2>
+	</div>
+	
+	<div class="content">
+		<div class="wrapper">
+			<div class="box">
+				<a><img src="flex5-1.jpg"></a>
+				<p>П-образная мойка</p>
+				<a href="#" class="glo">Подробнее</a>
+			</div>
+			<div class="box">
+				<a><img src="auxiliares1.jpg"></a>
+				<p>Название мойки или описание</p>
+				<a href="#" class="glo">Подробнее</a>
+			</div>
+			<div class="box">
+				<a><img src="img5-gallery-900x600.jpg"></a>
+				<p>Туннельная мойка</p>
+				<a href="#" class="glo">Подробнее</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="advantages">
+		<h2>Преимущества</h2>
+	</div>
+	
+	<div class="content_bottom">
+		<div class="wrapper_bottom">
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="check.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="cogs.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="handshake.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="tags.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="users.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+			<div class="box_bottom">
+				<h3>Наилучшее качество</h3>
+				<img src="surveillance-eye-symbol2.png">
+				<p>Используем лучшее оборудование и материалы</p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="title_company">
+		<h2>О компании</h2>
+		<div class="block_inf">
+			<div class="title_list">
+				<span>10</span>
+				<p>Лет в области автомоек</p>
+			</div>	
+			<div class="title_list">
+				<span>25</span>
+				<p>Компаний сотрудничают с нами</p>
+			</div>	
+			<div class="title_list">
+				<span>10%</span>
+				<p>Cкидки постоянным клиентам</p>
+			</div>	
+			<div class="title_list">
+				<span>100</span>
+				<p>Число установленных единиц</p>
+			</div>
+		</div>	
+	</div>
+	
+	<div class="coordinates">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d2349.3557423521843!2d27.61269808031502!3d53.92542350335244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e0!4m0!4m3!3m2!1d53.926972899999996!2d27.614929699999998!5e0!3m2!1sru!2sby!4v1543350915740" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="row_inner_left">
+				<img src="logo-footer.png">
+			</div>
+			<div class="row_inner_mid">
+				<h3>Компания</h3>
+				<ul>
+					<li>
+						<a href="">Home</a>
+						<a href="">Meet us</a>
+						<a href="">Work with us</a>
+						<a href="">Corporate principles</a>
+					</li>
+				</ul>
+			</div>
+			<div class="row_inner_right">
+				<h3>Контакты</h3>
+				<p>Tel: (+34) 962 997 940<br>
+						Fax: (+34) 962 997 991</p>
+				<p>г.Минск, ул.Толбухина 2а</p>
+				<p><a>istobal@istobal.com</a></p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
